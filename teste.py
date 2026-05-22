@@ -8,7 +8,7 @@ import requests
 # Ler Excel
 # ---------------------------------
 
-df = pd.read_excel("OCORRENCIAS_2026.csv (1).xlsx")
+df = pd.read_excel("OCORRENCIAS_2026.csv.csv")
 
 # ---------------------------------
 # Agrupar ocorrências
