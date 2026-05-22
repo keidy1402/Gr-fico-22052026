@@ -2,7 +2,7 @@ import streamlit as st
 import plotly.graph_objects as go
 import pandas as pd
 
-df = pd.read_csv('OCORRENCIAS_2026.csv (1).xlsx')
+df = pd.read_csv('https://github.com/keidy1402/Gr-fico-22052026/blob/72fb9948cf422874cd2dc27332161eb5a41638f1/OCORRENCIAS_2026.csv%20(1).xlsx')
 df.head()
 
 # Configuração Streamlit
