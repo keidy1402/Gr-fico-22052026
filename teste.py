@@ -34,12 +34,12 @@ geojson = requests.get(geojson_url).json()
 fig = px.choropleth(
     ocorrencias,
     geojson=geojson,
-    locations="uf",
+    locations="UF",
     featureidkey="properties.sigla",
     color="total",
     color_continuous_scale="Reds",
     projection="mercator",
-    hover_name="uf",
+    hover_name="UF",
     title="Mapa de Periculosidade por Estado"
 )
 
