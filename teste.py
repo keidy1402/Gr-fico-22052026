@@ -8,9 +8,7 @@ import requests
 # Ler Excel
 # ---------------------------------
 
-url = "https://raw.githubusercontent.com/keidy1402/Grafico22052026/319d49cd2d5c6b733d213d53da3ea3494fe5e981/OCORRENCIAS_2026.csv%20(1).xlsx"
-
-df = pd.read_excel(url)
+df = pd.read_excel("OCORRENCIAS_2026.xlsx")
 
 # ---------------------------------
 # Agrupar ocorrências
