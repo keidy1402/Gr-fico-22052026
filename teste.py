@@ -8,12 +8,13 @@ import requests
 # ---------------------------------
 
 df = pd.read_csv("OCORRENCIAS_2026.csv.csv")
+st.write(df.columns)
 
 # ---------------------------------
 # Agrupar ocorrências
 # ---------------------------------
 
-ocorrencias = df.groupby("uf").size().reset_index(name="total")
+ocorrencias = df.groupby("UF").size().reset_index(name="Total")
 
 # ---------------------------------
 # GeoJSON estados Brasil
