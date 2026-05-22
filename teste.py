@@ -2,7 +2,7 @@ import streamlit as st
 import plotly.graph_objects as go
 import pandas as pd
 
-df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2014_us_cities.csv')
+df = pd.read_csv('OCORRENCIAS_2026.csv (1).xlsx')
 df.head()
 
 # Configuração Streamlit
@@ -14,7 +14,7 @@ st.title("Mapa de Periculosidade no Brasil")
 st.write("Visualização de regiões com maior índice de perigo.")
 
 trace = go.Scattergeo(
-                     locationmode = 'USA-states',
+                     locationmode = 'Brazil',
                      lon = df['lon'],
                      lat = df['lat'],
                      text = df['name'] + '- População: ' + df['pop'].astype(str),
