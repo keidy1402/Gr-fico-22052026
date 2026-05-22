@@ -8,7 +8,7 @@ import requests
 # Ler Excel
 # ---------------------------------
 
-url = "https://raw.githubusercontent.com/keidy1402/Gr-fico-22052026/main/OCORRENCIAS_2026.xlsx"
+url = ""
 
 df = pd.read_excel(url)
 
