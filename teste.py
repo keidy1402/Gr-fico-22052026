@@ -1,92 +1,111 @@
 import streamlit as st
 import pandas as pd
-import folium
-from streamlit_folium import st_folium
+import plotly.express as px
 
-st.set_page_config(layout="wide")
-
-st.title("Mapa de Periculosidade do Rio de Janeiro")
-
-st.write(
-    "Mapa fictício de risco por bairros do Rio de Janeiro."
-)
-
-# -----------------------------
-# Dados fictícios
-# -----------------------------
-
-dados = pd.DataFrame({
-    "bairro": [
-        "Copacabana",
-        "Tijuca",
-        "Santa Teresa",
-        "Barra da Tijuca",
-        "Leblon",
-        "Botafogo",
-        "Centro",
-        "Jacarepaguá"
+# ---------------------------------
+# Dados de exemplo
+# ---------------------------------
+dados = {
+    "cidade": [
+        "São Paulo",
+        "Rio de Janeiro",
+        "Salvador",
+        "Fortaleza",
+        "Manaus",
+        "Curitiba",
+        "Brasília"
     ],
-    "score": [7.5, 6.2, 5.8, 4.1, 3.5, 5.0, 7.0, 6.5],
+    
     "lat": [
-        -22.9711,
-        -22.9245,
-        -22.9152,
-        -23.0004,
-        -22.9839,
-        -22.9519,
-        -22.9035,
-        -22.9658
+        -23.5505,
+        -22.9068,
+        -12.9714,
+        -3.7319,
+        -3.1190,
+        -25.4284,
+        -15.7939
     ],
+    
     "lon": [
-        -43.1822,
-        -43.2416,
-        -43.1889,
-        -43.3659,
-        -43.2249,
-        -43.1803,
-        -43.2096,
-        -43.3919
+        -46.6333,
+        -43.1729,
+        -38.5014,
+        -38.5267,
+        -60.0217,
+        -49.2733,
+        -47.8828
+    ],
+    
+    # índice de periculosidade
+    "periculosidade": [
+        95,
+        88,
+        75,
+        70,
+        65,
+        45,
+        40
     ]
-})
+}
 
-# -----------------------------
-# Criar mapa
-# -----------------------------
+df = pd.DataFrame(dados)
 
-mapa = folium.Map(
-    location=[-22.9068, -43.1729],
-    zoom_start=11
+# ---------------------------------
+# Configuração Streamlit
+# ---------------------------------
+st.set_page_config(page_title="Mapa de Periculosidade", layout="wide")
+
+st.title("Mapa de Periculosidade no Brasil")
+
+st.write("Visualização de regiões com maior índice de perigo.")
+
+# ---------------------------------
+# Criação do mapa
+# ---------------------------------
+fig = px.scatter_geo(
+    df,
+    lat="lat",
+    lon="lon",
+    size="periculosidade",
+    color="periculosidade",
+    hover_name="cidade",
+    
+    # escala das bolhas
+    size_max=50,
+
+    # cores
+    color_continuous_scale=[
+        "#f0dbb6",
+        "#c68c53",
+        "#f2b856",
+        "#104f7e",
+        "#c03131"
+    ],
+
+    projection="natural earth"
 )
 
-# -----------------------------
-# Adicionar círculos
-# -----------------------------
+# ---------------------------------
+# Ajustes do mapa
+# ---------------------------------
+fig.update_geos(
+    scope="south america",
+    showcountries=True,
+    countrycolor="white",
+    showland=True,
+    landcolor="#1DB954",  # verde do mapa
+    coastlinecolor="white",
+    lataxis_range=[-35, 6],
+    lonaxis_range=[-75, -30]
+)
 
-for _, row in dados.iterrows():
+fig.update_layout(
+    height=700,
+    margin={"r":0,"t":0,"l":0,"b":0},
+    paper_bgcolor="#ebebeb"
+)
 
-    if row["score"] >= 7:
-        cor = "red"
-    elif row["score"] >= 5:
-        cor = "orange"
-    else:
-        cor = "green"
-
-    folium.CircleMarker(
-        location=[row["lat"], row["lon"]],
-        radius=row["score"] * 2,
-        popup=f"""
-        <b>Bairro:</b> {row['bairro']}<br>
-        <b>Score:</b> {row['score']}
-        """,
-        color=cor,
-        fill=True,
-        fill_color=cor,
-        fill_opacity=0.7
-    ).add_to(mapa)
-
-# -----------------------------
-# Exibir no Streamlit
-# -----------------------------
-
-st_folium(mapa, width=1200, height=700)
-st_folium(m, width=1200, height=700)
+# ---------------------------------
+# Mostrar no Streamlit
+# ---------------------------------
+st.plotly_chart(fig, use_container_width=True)
